@@ -27,6 +27,7 @@ public class Tony extends Thread {
     private static final int INTERCHAR = 3;
     private static final int INTERWORD = 7;
     private static final int MAXVOL = 32767;
+    public Runnable finishedSound;
     static final Map<String , String> morseChars = new HashMap<String , String>() {{
         put("A", ".-");
         put("B","-...");
@@ -159,6 +160,7 @@ public class Tony extends Thread {
         audioTrack.play();
         writeWord(text);
         audioTrack.stop();
+        finishedSound.run();
     }
 
     void writeWord(String word) {

@@ -28,6 +28,12 @@ public class MainActivity extends ActionBarActivity {
         readSource = (EditText)findViewById(R.id.readsource);
         final Tony tony = new Tony();
         final Handler tonyHandler = tony.handler;
+        tony.finishedSound = new Runnable() {
+            @Override
+            public void run() {
+                Log.v("HELLO", String.format("Finished"));
+            }
+        };
         tony.start();
 
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
