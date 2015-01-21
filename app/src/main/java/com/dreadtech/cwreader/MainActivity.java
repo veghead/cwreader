@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import java.util.Locale;
 
@@ -20,18 +21,32 @@ public class MainActivity extends ActionBarActivity {
     TextToSpeech ttobj;
     boolean ttsReady = false;
     EditText readSource;
+    NumberPicker wpmPicker;
+    NumberPicker freqPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         readSource = (EditText)findViewById(R.id.readsource);
+        wpmPicker = (NumberPicker)findViewById(R.id.wpm);
+        wpmPicker.setMaxValue(90);
+        wpmPicker.setMinValue(5);
+        freqPicker = (NumberPicker)findViewById(R.id.freq);
+        freqPicker.setMaxValue(1100);
+        freqPicker.setMinValue(500);
+
         final Tony tony = new Tony();
         final Handler tonyHandler = tony.handler;
         tony.finishedSound = new Runnable() {
             @Override
             public void run() {
-                Log.v("HELLO", String.format("Finished"));
+                try {
+                    Thread.sleep(4000);
+                } catch (Exception e) {
+
+                }
+                ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
         };
         tony.start();

@@ -67,7 +67,6 @@ public class Tony extends Thread {
 		put("9","----.");
 /*
 		put("..--..");
-		/* 0..9 
 		put("-..-.");
 		           /* Question Mark 
 		put("--..--");
@@ -158,7 +157,10 @@ public class Tony extends Thread {
 
     void soundText(String text) {
         audioTrack.play();
-        writeWord(text);
+        String words[] = text.split(" ");
+        for (String word : words) {
+            writeWord(word);
+        }
         audioTrack.stop();
         finishedSound.run();
     }

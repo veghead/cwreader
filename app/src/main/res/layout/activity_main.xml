@@ -27,12 +27,55 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
-        android:text="this is a test"
+        android:text="one two, one two, and through and through"
         android:layout_above="@+id/play_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/readsource" />
+        android:id="@+id/readsource"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/readsource"
+        android:layout_toLeftOf="@+id/freq"
+        android:layout_toStartOf="@+id/freq"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="WPM"
+            android:id="@+id/textView"
+            android:gravity="center_vertical" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wpm"
+            android:layout_below="@+id/play_button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Tone Freq"
+            android:id="@+id/textView2"
+            android:gravity="center_vertical"
+            android:paddingLeft="50dp" />
+
+        <NumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/freq"
+            android:layout_alignTop="@+id/wpm"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </LinearLayout>
 
 </RelativeLayout>
