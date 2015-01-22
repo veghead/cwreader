@@ -1,11 +1,9 @@
 package com.dreadtech.cwreader;
 
-import android.os.Handler;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,27 +26,41 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Tony tony = new Tony();
         readSource = (EditText)findViewById(R.id.readsource);
         wpmPicker = (NumberPicker)findViewById(R.id.wpm);
         wpmPicker.setMaxValue(90);
         wpmPicker.setMinValue(5);
+        wpmPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                tony.setWpm(wpmPicker.getValue());
+            }
+        });
         freqPicker = (NumberPicker)findViewById(R.id.freq);
         freqPicker.setMaxValue(1100);
-        freqPicker.setMinValue(500);
+        freqPicker.setMinValue(200);
+        freqPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                tony.setToneFreq(freqPicker.getValue());
+            }
+        });
+        freqPicker.setValue(800);
+        wpmPicker.setValue(17);
 
-        final Tony tony = new Tony();
-        final Handler tonyHandler = tony.handler;
-        tony.finishedSound = new Runnable() {
+        tony.setFinishedSound(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(5000);
                 } catch (Exception e) {
 
                 }
                 ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
             }
-        };
+        });
         tony.start();
 
         ttobj = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -70,8 +82,7 @@ public class MainActivity extends ActionBarActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("word", readSource.getText().toString());
                     msg.setData(bundle);
-                    tonyHandler.sendMessage(msg);
-                    //ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    tony.getHandler().sendMessage(msg);
                 }
             }
         });
