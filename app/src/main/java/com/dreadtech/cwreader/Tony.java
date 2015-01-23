@@ -7,7 +7,6 @@ import android.media.AudioTrack;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.os.Handler;
 
 import java.util.HashMap;
@@ -28,7 +27,6 @@ public class Tony extends Thread {
     private static final int DASHLEN = 3;
     private static final int INTRACHAR = 1;
     private static final int INTERCHAR = 3;
-    private static final int INTERWORD = 7;
     private static final int MAXVOL = 32767;
     private static Handler handler;
 
@@ -69,23 +67,15 @@ public class Tony extends Thread {
 		put("7","--...");
 		put("8","---..");
 		put("9","----.");
-/*
-		put("..--..");
-		put("-..-.");
-		           /* Question Mark 
-		put("--..--");
-		            /* Slash 
-		put(".-.-.-");
-		           /* Comma 
-		put();
-		           /* Period
-		put("-...-");
-		put(".-.-.");
-		            /* BT (double dash)
-		put("...-.-");
-		            /* AR (end of message)
-           /* SK (end of contact)
-*/
+		put("?","..--..");
+		put("/","-..-.");
+		put(",","--..--");
+		put(".",".-.-.-");
+        /*
+		put("-...-"); // BT (double dash)
+		put(".-.-."); / AR (end of message)
+		put("...-.-"); // SK (end of contact)
+        */
     }};
 
 
@@ -119,10 +109,9 @@ public class Tony extends Thread {
         int stdvol = (int)((float)vol * (float)MAXVOL / 100.0);
         int curvol = stdvol;
         for (int i = 0; i < len; i += 1) {
-            /*if (i > (len - fadelen)) {
+            if (i > (len - fadelen)) {
                 curvol = (int)((float)(len - i) * curvol /(float)fadelen);
-                Log.v("Msg","v " + curvol);
-            } */
+            }
             final short rawval = (short) ((raw[i] * curvol));
             buffer[j++] = (byte) (rawval & 0x00ff);
             buffer[j++] = (byte) ((rawval & 0xff00) >>> 8);
