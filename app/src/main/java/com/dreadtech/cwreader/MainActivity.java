@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2015 dreadtech.com.
+ *
+ *     This file is part of CWReader.
+ *
+ *     CWReader is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Foobar is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with CWReader.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.dreadtech.cwreader;
 
 import android.os.Message;
@@ -9,7 +28,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.ToggleButton;
 
 import java.util.Locale;
 
@@ -19,8 +40,8 @@ public class MainActivity extends ActionBarActivity {
     TextToSpeech ttobj;
     boolean ttsReady = false;
     EditText readSource;
-    NumberPicker wpmPicker;
-    NumberPicker freqPicker;
+    LEDNumberPicker wpmPicker;
+    LEDNumberPicker freqPicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,25 +49,27 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         final Tony tony = new Tony();
+        wpmPicker = (LEDNumberPicker)findViewById(R.id.wpm);
+        freqPicker = (LEDNumberPicker)findViewById(R.id.freq);
+
+        final LEDNumberPicker wpm;
+
         readSource = (EditText)findViewById(R.id.readsource);
-        wpmPicker = (NumberPicker)findViewById(R.id.wpm);
-        wpmPicker.setMaxValue(90);
-        wpmPicker.setMinValue(5);
-        wpmPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+        wpmPicker.setOnValueChangedListener(new LEDNumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                tony.setWpm(wpmPicker.getValue());
+            public void onValueChange(LEDNumberPicker picker, int oldVal, int newVal) {
+                tony.setWpm(picker.getValue());
             }
         });
-        freqPicker = (NumberPicker)findViewById(R.id.freq);
-        freqPicker.setMaxValue(1100);
-        freqPicker.setMinValue(200);
-        freqPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+
+        freqPicker.setOnValueChangedListener(new LEDNumberPicker.OnValueChangeListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                tony.setToneFreq(freqPicker.getValue());
+            public void onValueChange(LEDNumberPicker picker, int oldVal, int newVal) {
+                tony.setToneFreq(picker.getValue());
             }
         });
+
         freqPicker.setValue(800);
         wpmPicker.setValue(17);
 
@@ -77,13 +100,13 @@ public class MainActivity extends ActionBarActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ttsReady) {
-                    Message msg = Message.obtain();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("word", readSource.getText().toString());
-                    msg.setData(bundle);
-                    tony.getHandler().sendMessage(msg);
-                }
+            if (ttsReady) {
+                Message msg = Message.obtain();
+                Bundle bundle = new Bundle();
+                bundle.putString("word", readSource.getText().toString());
+                msg.setData(bundle);
+                tony.getHandler().sendMessage(msg);
+            }
             }
         });
     }

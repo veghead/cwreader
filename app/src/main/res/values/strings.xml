@@ -9,4 +9,7 @@
     <string name="ToneFreq">Tone Freq</string>
     <string name="Play">Play</string>
     <string name="DefaultText">one two, one two, and through and through</string>
+    <string name="Up">Up</string>
+    <string name="Down">Down</string>
+
 </resources>
