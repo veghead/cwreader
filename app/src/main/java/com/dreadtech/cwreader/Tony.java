@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Handler;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,11 +125,16 @@ public class Tony extends Thread {
     private void makeTone(byte buffer[], int len, int vol, int fadelen) {
         int j = 0;
         int stdvol = (int)((float)vol * (float)MAXVOL / 100.0);
-        int curvol = stdvol;
         for (int i = 0; i < len; i += 1) {
+            int curvol = stdvol;
+            // Fade the sound in and out at the beginning and end of
+            // each tone
             if (i > (len - fadelen)) {
-                curvol = (int)((float)(len - i) * curvol /(float)fadelen);
+                curvol = (int)((float)(len - 1 - i) * curvol /(float)fadelen);
+            } else if (i < fadelen) {
+                curvol = (int)((float)(i) * curvol / (float)fadelen);
             }
+
             final short rawval = (short) ((raw[i] * curvol));
             buffer[j++] = (byte) (rawval & 0x00ff);
             buffer[j++] = (byte) ((rawval & 0xff00) >>> 8);
@@ -145,9 +149,9 @@ public class Tony extends Thread {
         for (int i = 0; i < dotlen * 3; ++i) {
             raw[i] = Math.sin(2 * Math.PI * i / (sampleRate/toneFreq));
         }
-        makeTone(dot, dotlen, 100, 5);
-        makeTone(silent, dotlen * 3, 0, 5);
-        makeTone(dash, dotlen * 3, 100, 5);
+        makeTone(dot, dotlen, 100, 100);
+        makeTone(silent, dotlen * 3, 0, 0);
+        makeTone(dash, dotlen * 3, 100, 10);
         needToGenerate = false;
     }
 
