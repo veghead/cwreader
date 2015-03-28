@@ -8,6 +8,10 @@
     <string name="WPM">WPM</string>
     <string name="ToneFreq">Tone Freq</string>
     <string name="Play">Play</string>
+    <string name="Stop">Stop</string>
+    <string name="PlayText">Play Text</string>
+    <string name="CopyGroups">Play Random</string>
+    <string name="Farnsworth">Farnsworth</string>
     <string name="DefaultText">one two, one two, and through and through</string>
     <string name="Up">Up</string>
     <string name="Down">Down</string>

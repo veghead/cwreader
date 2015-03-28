@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
 import android.os.Handler;
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +50,10 @@ public class Tony extends Thread {
     private static final int DASHLEN = 3;
     private static final int INTRACHAR = 1;
     private static final int INTERCHAR = 3;
-    private static final int MAXVOL = 32767;
+    private static final int INTERWORD = 7;
+    private boolean stopped = true;
+
+    private static final int MAXVOL = 32760;
     private static Handler handler;
 
     static final Map<String , String> morseChars = new HashMap<String , String>() {{
@@ -132,11 +137,11 @@ public class Tony extends Thread {
             int curvol = stdvol;
             // Fade the sound in and out at the beginning and end of
             // each tone
-           /* if (i > (len - fadelen)) {
+            if (i > (len - fadelen)) {
                 curvol = (int)((float)(len - 1 - i) * curvol /(float)fadelen);
             } else if (i < fadelen) {
                 curvol = (int)((float)(i) * curvol / (float)fadelen);
-            }*/
+            }
 
             final short rawval = (short) ((raw[i] * curvol));
             buffer[j++] = (byte) (rawval & 0x00ff);
@@ -154,7 +159,7 @@ public class Tony extends Thread {
         for (int i = 0; i < dotlen * 3; ++i) {
             raw[i] = Math.sin(2 * Math.PI * i / (sampleRate/toneFreq));
         }
-        makeTone(dot, dotlen, 100, 100);
+        makeTone(dot, dotlen, 100, 10);
         makeTone(silent, farnlen, 0, 0);
         makeTone(dash, dotlen * 3, 100, 10);
         needToGenerate = false;
@@ -204,12 +209,17 @@ public class Tony extends Thread {
     }
 
     void soundText(String text) {
+        stopped = false;
         if (needToGenerate) {
             makeTones();
         }
         audioTrack.play();
         String words[] = text.split(" ");
         for (String word : words) {
+            if (stopped) {
+                audioTrack.stop();
+                return;
+            }
             writeWord(word);
         }
         audioTrack.stop();
@@ -223,9 +233,15 @@ public class Tony extends Thread {
             writeChar(morseCharAt(word, i));
         }
 
-        // Two INTERCHARS between words
-        audioTrack.write(silent, 0, farnlen * INTERCHAR);
-        audioTrack.write(silent, 0, farnlen * INTERCHAR);
-        // Together with the
+        audioTrack.write(silent, 0, farnlen * (INTERWORD - INTERCHAR));
+    }
+
+    public void setFarnsworth(boolean farnsworth) {
+        this.farnsworth = farnsworth;
+        needToGenerate = true;
+    }
+
+    public void setStopped() {
+        this.stopped = true;
     }
 }

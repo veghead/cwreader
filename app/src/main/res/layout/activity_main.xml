@@ -25,19 +25,40 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:paddingTop="30dp"
             android:text="@string/DefaultText"
             android:id="@+id/readsource"
             android:gravity="center" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Play"
+            android:text="@string/CopyGroups"
+            android:layout_gravity="center"
+            android:id="@+id/groups_button"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Stop"
+            android:layout_gravity="center"
+            android:id="@+id/stop_button"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/PlayText"
             android:layout_gravity="center"
             android:id="@+id/play_button"
-            android:layout_marginBottom="50dp"/>
+            />
+        </LinearLayout>
 
 
         <LinearLayout
@@ -70,9 +91,24 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/ledholder"></LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/toggleholder">
+
+            <com.dreadtech.cwreader.ToggleSwitch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/toggle_switch_bg"
+                android:id="@+id/farnsworthSwitch"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Farnsworth"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 

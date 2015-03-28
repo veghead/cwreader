@@ -20,26 +20,28 @@
 package com.dreadtech.cwreader;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ToggleButton;
 
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 
-public class PCBButton extends Button {
+public class ToggleSwitch extends ToggleButton {
     private int width = 30;
 
-    public PCBButton(Context context) {
-        super(context);
-        this.setBackgroundDrawable(getResources().getDrawable(R.drawable.pcb_button));
+    public ToggleSwitch(Context context, AttributeSet attrs) {
+        super(context, attrs);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        width = dm.widthPixels / 12;
+        width = dm.widthPixels / 8;
         setWidth(width);
         setHeight(width);
+        setTextOn("");
+        setTextOff("");
     }
 
 
     protected void onMeasure (int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(makeMeasureSpec(width,MeasureSpec.EXACTLY), makeMeasureSpec(width,MeasureSpec.EXACTLY));
+        setMeasuredDimension(makeMeasureSpec(width, View.MeasureSpec.EXACTLY), makeMeasureSpec(width,MeasureSpec.EXACTLY));
     }
-
 }

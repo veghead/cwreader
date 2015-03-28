@@ -23,14 +23,13 @@ import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.NumberPicker;
-import android.widget.ToggleButton;
 
 import java.util.Locale;
 
@@ -39,9 +38,11 @@ public class MainActivity extends ActionBarActivity {
 
     TextToSpeech ttobj;
     boolean ttsReady = false;
+    boolean stopped = true;
     EditText readSource;
     LEDNumberPicker wpmPicker;
     LEDNumberPicker freqPicker;
+    ToggleSwitch farnsworthSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         final Tony tony = new Tony();
+        farnsworthSwitch = (ToggleSwitch)findViewById(R.id.farnsworthSwitch);
         wpmPicker = (LEDNumberPicker)findViewById(R.id.wpm);
         freqPicker = (LEDNumberPicker)findViewById(R.id.freq);
-
-        final LEDNumberPicker wpm;
 
         readSource = (EditText)findViewById(R.id.readsource);
 
@@ -73,6 +73,15 @@ public class MainActivity extends ActionBarActivity {
         freqPicker.setValue(800);
         wpmPicker.setValue(17);
 
+        farnsworthSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                tony.setFarnsworth(isChecked);
+            }
+        });
+
+        farnsworthSwitch.setChecked(true);
+
         tony.setFinishedSound(new Runnable() {
             @Override
             public void run() {
@@ -81,7 +90,9 @@ public class MainActivity extends ActionBarActivity {
                 } catch (Exception e) {
 
                 }
-                ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                if (!stopped) {
+                    ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                }
             }
         });
         tony.start();
@@ -96,17 +107,53 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        Button playButton = (Button) findViewById(R.id.play_button);
+        final Button playButton = (Button) findViewById(R.id.play_button);
+        final Button stopButton = (Button) findViewById(R.id.stop_button);
+        final Button groupsButton = (Button) findViewById(R.id.groups_button);
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             if (ttsReady) {
+                v.setEnabled(false);
+                groupsButton.setEnabled(false);
+                stopButton.setEnabled(true);
                 Message msg = Message.obtain();
                 Bundle bundle = new Bundle();
                 bundle.putString("word", readSource.getText().toString());
                 msg.setData(bundle);
                 tony.getHandler().sendMessage(msg);
+                stopped = false;
             }
+            }
+        });
+
+        stopButton.setEnabled(false);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setEnabled(false);
+                playButton.setEnabled(true);
+                groupsButton.setEnabled(true);
+                tony.setStopped();
+                stopped = true;
+            }
+        });
+
+        groupsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ttsReady) {
+                    v.setEnabled(false);
+                    playButton.setEnabled(false);
+                    stopButton.setEnabled(true);
+                    Message msg = Message.obtain();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("word", readSource.getText().toString());
+                    msg.setData(bundle);
+                    tony.getHandler().sendMessage(msg);
+                    stopped = false;
+                }
             }
         });
     }
