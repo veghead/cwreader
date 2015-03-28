@@ -80,13 +80,7 @@ public class LEDNumberPicker extends LinearLayout {
         labelView.setGravity(Gravity.CENTER_HORIZONTAL);
         this.addView(labelView);
 
-        up = new PCBButton(context);
-        up.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setValue(getValue() + 1);
-            }
-        });
+
         down = new PCBButton(context);
         down.setOnClickListener(new OnClickListener() {
             @Override
@@ -94,12 +88,19 @@ public class LEDNumberPicker extends LinearLayout {
                 setValue(getValue() - 1);
             }
         });
+        up = new PCBButton(context);
+        up.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setValue(getValue() + 1);
+            }
+        });
 
         LinearLayout buttonLayout = new LinearLayout(context);
         buttonLayout.setGravity(Gravity.CENTER_HORIZONTAL);
         buttonLayout.setOrientation(HORIZONTAL);
-        buttonLayout.addView(up);
         buttonLayout.addView(down);
+        buttonLayout.addView(up);
         this.addView(buttonLayout);
     }
 

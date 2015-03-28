@@ -41,6 +41,9 @@ public class Tony extends Thread {
     private final int maxSamples = maxDuration * sampleRate;
     private final double raw[] = new double[maxSamples];
     private int dotlen = 0;
+    private int farnlen = 0;
+    private double farnsworthwpm = 5;
+    private boolean farnsworth = true;
     private static final int PARIS = 50;
     private static final int DASHLEN = 3;
     private static final int INTRACHAR = 1;
@@ -129,11 +132,11 @@ public class Tony extends Thread {
             int curvol = stdvol;
             // Fade the sound in and out at the beginning and end of
             // each tone
-            if (i > (len - fadelen)) {
+           /* if (i > (len - fadelen)) {
                 curvol = (int)((float)(len - 1 - i) * curvol /(float)fadelen);
             } else if (i < fadelen) {
                 curvol = (int)((float)(i) * curvol / (float)fadelen);
-            }
+            }*/
 
             final short rawval = (short) ((raw[i] * curvol));
             buffer[j++] = (byte) (rawval & 0x00ff);
@@ -142,15 +145,17 @@ public class Tony extends Thread {
     }
 
     public void makeTones() {
-        // Work out samples per element (i.e. per dash)
+        // Work out samples per element (i.e. per dot)
+        double fwpm = (farnsworth ? farnsworthwpm : wpm);
         dotlen = (int)((60.0 * (double)sampleRate) / (wpm * (double)PARIS));
+        farnlen = (int)((60.0 * (double)sampleRate) / (fwpm * (double)PARIS));
 
         // create a nice sine wave
         for (int i = 0; i < dotlen * 3; ++i) {
             raw[i] = Math.sin(2 * Math.PI * i / (sampleRate/toneFreq));
         }
         makeTone(dot, dotlen, 100, 100);
-        makeTone(silent, dotlen * 3, 0, 0);
+        makeTone(silent, farnlen, 0, 0);
         makeTone(dash, dotlen * 3, 100, 10);
         needToGenerate = false;
     }
@@ -191,9 +196,11 @@ public class Tony extends Thread {
                     audioTrack.write(dash, 0, dotlen * DASHLEN);
                     break;
             }
-            audioTrack.write(silent, 0, dotlen * INTRACHAR);
+            if (i < morseChar.length() - 1 ) {
+                audioTrack.write(silent, 0, dotlen * INTRACHAR);
+            }
         }
-        audioTrack.write(silent, 0, dotlen * INTERCHAR);
+        audioTrack.write(silent, 0, farnlen * INTERCHAR);
     }
 
     void soundText(String text) {
@@ -217,7 +224,8 @@ public class Tony extends Thread {
         }
 
         // Two INTERCHARS between words
-        audioTrack.write(silent, 0, dotlen * INTERCHAR);
-        audioTrack.write(silent, 0, dotlen * INTERCHAR);
+        audioTrack.write(silent, 0, farnlen * INTERCHAR);
+        audioTrack.write(silent, 0, farnlen * INTERCHAR);
+        // Together with the
     }
 }
