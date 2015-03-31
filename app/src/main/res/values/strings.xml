@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">CWreader</string>
     <string name="CWReader">CWReader</string>
     <string name="action_settings">Settings</string>
@@ -12,8 +11,10 @@
     <string name="PlayText">Play Text</string>
     <string name="CopyGroups">Play Random</string>
     <string name="Farnsworth">Farnsworth</string>
+    <string name="Settings">Settings</string>
+    <string name="NumberOfGroups">Number of groups</string>
+    <string name="LettersPerGroup">Letters per group</string>
     <string name="DefaultText">one two, one two, and through and through</string>
     <string name="Up">Up</string>
     <string name="Down">Down</string>
-
 </resources>

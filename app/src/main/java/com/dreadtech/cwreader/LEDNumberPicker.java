@@ -111,7 +111,9 @@ public class LEDNumberPicker extends LinearLayout {
         for (int d = 0; d < digits; d++) {
             digitArray.get(digits - d - 1).setDigit((int)(v / (Math.pow(10,d))) % 10);
         }
-        listener.onValueChange(this,old,v);
+        if (listener != null) {
+            listener.onValueChange(this, old, v);
+        }
     }
 
     public int getValue() {

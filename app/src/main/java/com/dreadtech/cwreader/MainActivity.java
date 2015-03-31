@@ -32,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import java.util.Locale;
+import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -42,17 +43,31 @@ public class MainActivity extends ActionBarActivity {
     EditText readSource;
     LEDNumberPicker wpmPicker;
     LEDNumberPicker freqPicker;
+    LEDNumberPicker lettersPerGroupPicker;
+    LEDNumberPicker numberOfGroupsPicker;
     ToggleSwitch farnsworthSwitch;
+    String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String digits = "123456789";
+    Button playButton;
+    Button stopButton;
+    Button groupsButton;
+    String currentWord = "";
+    Tony tony;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Tony tony = new Tony();
+        tony = new Tony();
         farnsworthSwitch = (ToggleSwitch)findViewById(R.id.farnsworthSwitch);
         wpmPicker = (LEDNumberPicker)findViewById(R.id.wpm);
         freqPicker = (LEDNumberPicker)findViewById(R.id.freq);
+        lettersPerGroupPicker = (LEDNumberPicker)findViewById(R.id.lettersPerGroup);
+        numberOfGroupsPicker = (LEDNumberPicker)findViewById(R.id.numberOfGroups);
+
+        numberOfGroupsPicker.setValue(1);
+        lettersPerGroupPicker.setValue(5);
 
         readSource = (EditText)findViewById(R.id.readsource);
 
@@ -91,7 +106,14 @@ public class MainActivity extends ActionBarActivity {
 
                 }
                 if (!stopped) {
-                    ttobj.speak(readSource.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                    ttobj.speak(currentWord, TextToSpeech.QUEUE_FLUSH, null);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            stopThat();
+                            readSource.setText(currentWord);
+                        }
+                    });
                 }
             }
         });
@@ -107,9 +129,11 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        final Button playButton = (Button) findViewById(R.id.play_button);
-        final Button stopButton = (Button) findViewById(R.id.stop_button);
-        final Button groupsButton = (Button) findViewById(R.id.groups_button);
+        currentWord = readSource.getText().toString();
+
+        playButton = (Button) findViewById(R.id.play_button);
+        stopButton = (Button) findViewById(R.id.stop_button);
+        groupsButton = (Button) findViewById(R.id.groups_button);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +156,7 @@ public class MainActivity extends ActionBarActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.setEnabled(false);
-                playButton.setEnabled(true);
-                groupsButton.setEnabled(true);
-                tony.setStopped();
-                stopped = true;
+                stopThat();
             }
         });
 
@@ -145,19 +165,30 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (ttsReady) {
                     v.setEnabled(false);
+                    currentWord = makeWord();
                     playButton.setEnabled(false);
                     stopButton.setEnabled(true);
                     Message msg = Message.obtain();
                     Bundle bundle = new Bundle();
-                    bundle.putString("word", readSource.getText().toString());
+                    readSource.setText("");
+                    bundle.putString("word", currentWord);
                     msg.setData(bundle);
-                    tony.getHandler().sendMessage(msg);
                     stopped = false;
+                    tony.getHandler().sendMessage(msg);
                 }
             }
         });
+
+
     }
 
+    public void stopThat() {
+        playButton.setEnabled(true);
+        groupsButton.setEnabled(true);
+        tony.setStopped();
+        stopButton.setEnabled(false);
+        stopped = true;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -173,10 +204,21 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String makeWord() {
+        Random r = new Random();
+        int numLetters = lettersPerGroupPicker.getValue();
+        String set = letters;//+digits;
+        String group = "";
+        for(int i = 0; i< numLetters; i++) {
+            int index = r.nextInt(set.length() - 1);
+            group += set.substring(index, index+1);
+        }
+        return group;
     }
 }
