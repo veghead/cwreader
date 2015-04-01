@@ -11,6 +11,7 @@
     <string name="PlayText">Play Text</string>
     <string name="CopyGroups">Play Random</string>
     <string name="Farnsworth">Farnsworth</string>
+    <string name="Digits">Digits</string>
     <string name="Settings">Settings</string>
     <string name="NumberOfGroups">Number of groups</string>
     <string name="LettersPerGroup">Letters per group</string>

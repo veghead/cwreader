@@ -43,7 +43,7 @@ public class LEDNumberPicker extends LinearLayout {
     private int value = 0;
     private Button up, down;
     private ArrayList<SevenSegmentLED> digitArray;
-    private OnValueChangeListener listener;
+    private OnValueChangeListener listener = null;
     private String label;
 
 

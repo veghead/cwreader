@@ -144,7 +144,8 @@ public class MainActivity extends ActionBarActivity {
                 stopButton.setEnabled(true);
                 Message msg = Message.obtain();
                 Bundle bundle = new Bundle();
-                bundle.putString("word", readSource.getText().toString());
+                currentWord = readSource.getText().toString();
+                bundle.putString("word", currentWord);
                 msg.setData(bundle);
                 tony.getHandler().sendMessage(msg);
                 stopped = false;

@@ -87,8 +87,6 @@ public class SevenSegmentLED extends android.view.View {
         iconMap.put("off", Bitmap.createScaledBitmap(
                 BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.off),width,height, true));
-
-
     }
 
     protected void onDraw(Canvas canvas) {
