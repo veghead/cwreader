@@ -39,7 +39,7 @@ public class Tony extends Thread {
     private double wpm = 20;
     private double toneFreq = 800;
     private final int maxDuration = 3;
-    private final int sampleRate = 8000;
+    private final int sampleRate = 16000;
     private final int maxSamples = maxDuration * sampleRate;
     private final double raw[] = new double[maxSamples];
     private int dotlen = 0;
@@ -53,11 +53,11 @@ public class Tony extends Thread {
     private static final int INTERWORD = 7;
     private boolean stopped = true;
 
-    private static final int MAXVOL = 32760;
+    private static final int MAXVOL = 32000;
     private static Handler handler;
 
     static final Map<String , String> morseChars = new HashMap<String , String>() {{
-        put("A", ".-");
+        put("A",".-");
         put("B","-...");
         put("C","-.-.");
         put("D","-..");
@@ -133,17 +133,18 @@ public class Tony extends Thread {
     private void makeTone(byte buffer[], int len, int vol, int fadelen) {
         int j = 0;
         int stdvol = (int)((float)vol * (float)MAXVOL / 100.0);
-        for (int i = 0; i < len; i += 1) {
+        for (int i = 0; i < len; i++) {
             int curvol = stdvol;
             // Fade the sound in and out at the beginning and end of
             // each tone
+
             if (i > (len - fadelen)) {
-                curvol = (int)((float)(len - 1 - i) * curvol /(float)fadelen);
+                curvol = (int)((float)((len - (i + 1)) * curvol /(float)fadelen));
             } else if (i < fadelen) {
                 curvol = (int)((float)(i) * curvol / (float)fadelen);
             }
-
             final short rawval = (short) ((raw[i] * curvol));
+
             buffer[j++] = (byte) (rawval & 0x00ff);
             buffer[j++] = (byte) ((rawval & 0xff00) >>> 8);
         }
@@ -159,9 +160,9 @@ public class Tony extends Thread {
         for (int i = 0; i < dotlen * 3; ++i) {
             raw[i] = Math.sin(2 * Math.PI * i / (sampleRate/toneFreq));
         }
-        makeTone(dot, dotlen, 100, 10);
+        makeTone(dot, dotlen, 100, 30);
         makeTone(silent, farnlen, 0, 0);
-        makeTone(dash, dotlen * 3, 100, 10);
+        makeTone(dash, dotlen * 3, 100, 30);
         needToGenerate = false;
     }
 
@@ -195,17 +196,17 @@ public class Tony extends Thread {
         for (int i = 0; i < morseChar.length(); i++) {
             switch (morseChar.charAt(i)) {
                 case('.'):
-                    audioTrack.write(dot, 0, dotlen);
+                    audioTrack.write(dot, 0, dotlen * 2);
                     break;
                 case('-'):
-                    audioTrack.write(dash, 0, dotlen * DASHLEN);
+                    audioTrack.write(dash, 0, dotlen * DASHLEN * 2);
                     break;
             }
             if (i < morseChar.length() - 1 ) {
-                audioTrack.write(silent, 0, dotlen * INTRACHAR);
+                audioTrack.write(silent, 0, dotlen * INTRACHAR * 2);
             }
         }
-        audioTrack.write(silent, 0, farnlen * INTERCHAR);
+        audioTrack.write(silent, 0, farnlen * INTERCHAR * 2);
     }
 
     void soundText(String text) {

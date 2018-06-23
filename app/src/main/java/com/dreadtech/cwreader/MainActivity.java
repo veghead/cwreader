@@ -36,7 +36,7 @@ import java.util.Random;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    private static final String TAG = "CWReader";
     TextToSpeech ttobj;
     boolean ttsReady = false;
     boolean stopped = true;
@@ -86,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         freqPicker.setValue(800);
-        wpmPicker.setValue(17);
+        wpmPicker.setValue(20);
 
         farnsworthSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -106,7 +106,7 @@ public class MainActivity extends ActionBarActivity {
 
                 }
                 if (!stopped) {
-                    ttobj.speak(currentWord, TextToSpeech.QUEUE_FLUSH, null);
+                    ttobj.speak(makeReadable(currentWord), TextToSpeech.QUEUE_FLUSH, null);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -138,18 +138,18 @@ public class MainActivity extends ActionBarActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (ttsReady) {
-                v.setEnabled(false);
-                groupsButton.setEnabled(false);
-                stopButton.setEnabled(true);
-                Message msg = Message.obtain();
-                Bundle bundle = new Bundle();
-                currentWord = readSource.getText().toString();
-                bundle.putString("word", currentWord);
-                msg.setData(bundle);
-                tony.getHandler().sendMessage(msg);
-                stopped = false;
-            }
+                if (ttsReady) {
+                    v.setEnabled(false);
+                    groupsButton.setEnabled(false);
+                    stopButton.setEnabled(true);
+                    Message msg = Message.obtain();
+                    Bundle bundle = new Bundle();
+                    currentWord = readSource.getText().toString();
+                    bundle.putString("word", currentWord);
+                    msg.setData(bundle);
+                    tony.getHandler().sendMessage(msg);
+                    stopped = false;
+                }
             }
         });
 
@@ -222,4 +222,78 @@ public class MainActivity extends ActionBarActivity {
         }
         return group;
     }
+
+    private String makeReadable(String word) {
+        if (!word.matches("^[A-Z\\d]+$")) {
+            return word;
+        }
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < word.length() ; i++) {
+            char c = word.charAt(i);
+            sb.append(phonetic(c) + " ");
+        }
+
+        Log.d(TAG, "Before: " + word + "  After:" + sb.toString());
+        return sb.toString();
+    }
+
+    private String phonetic(char c) {
+        switch (c) {
+            case 'A':
+                return "ay";
+            case 'B':
+                return "bee";
+            case 'C':
+                return "see";
+            case 'D':
+                return "dee";
+            case 'E':
+                return "ee";
+            case 'F':
+                return "ef";
+            case 'G':
+                return "gee";
+            case 'H':
+                return "aitch";
+            case 'I':
+                return "eye";
+            case 'J':
+                return "jay";
+            case 'K':
+                return "kay";
+            case 'L':
+                return "el";
+            case 'M':
+                return "em";
+            case 'N':
+                return "en";
+            case 'O':
+                return "oh";
+            case 'P':
+                return "pee";
+            case 'Q':
+                return "cue";
+            case 'R':
+                return "ar";
+            case 'S':
+                return "ess";
+            case 'T':
+                return "tee";
+            case 'U':
+                return "you";
+            case 'V':
+                return "vee";
+            case 'W':
+                return "double-u";
+            case 'X':
+                return "ex";
+            case 'Y':
+                return "wy";
+            case 'Z':
+                return "zed";
+        }
+        return String.valueOf(c);
+    }
 }
+
