@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:padding="20dp"
                 dreadtech:maxValue="10"
-                dreadtech:minValue="5"
+                dreadtech:minValue="1"
                 android:id="@+id/lettersPerGroup"
                 dreadtech:label="@string/LettersPerGroup"/>
         </LinearLayout>

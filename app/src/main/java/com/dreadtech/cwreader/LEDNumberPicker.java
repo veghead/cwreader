@@ -106,8 +106,8 @@ public class LEDNumberPicker extends LinearLayout {
 
     public void setValue(int v) {
         int old = value;
-        value = v;
         if ((v > maxValue) || (v < minValue)) return;
+        value = v;
         for (int d = 0; d < digits; d++) {
             digitArray.get(digits - d - 1).setDigit((int)(v / (Math.pow(10,d))) % 10);
         }
