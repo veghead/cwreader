@@ -19,14 +19,15 @@
 
 package com.dreadtech.cwreader;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -35,7 +36,7 @@ import java.util.Locale;
 import java.util.Random;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     private static final String TAG = "CWReader";
     TextToSpeech ttobj;
     boolean ttsReady = false;
@@ -65,11 +66,15 @@ public class MainActivity extends ActionBarActivity {
         freqPicker = (LEDNumberPicker)findViewById(R.id.freq);
         lettersPerGroupPicker = (LEDNumberPicker)findViewById(R.id.lettersPerGroup);
         numberOfGroupsPicker = (LEDNumberPicker)findViewById(R.id.numberOfGroups);
-
+        readSource = (EditText)findViewById(R.id.readsource);
+        findViewById(R.id.backgroundView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
+            }
+        });
         numberOfGroupsPicker.setValue(1);
         lettersPerGroupPicker.setValue(5);
-
-        readSource = (EditText)findViewById(R.id.readsource);
 
         wpmPicker.setOnValueChangedListener(new LEDNumberPicker.OnValueChangeListener() {
             @Override
@@ -138,6 +143,7 @@ public class MainActivity extends ActionBarActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 if (ttsReady) {
                     v.setEnabled(false);
                     groupsButton.setEnabled(false);
@@ -157,6 +163,7 @@ public class MainActivity extends ActionBarActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 stopThat();
             }
         });
@@ -164,6 +171,7 @@ public class MainActivity extends ActionBarActivity {
         groupsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 if (ttsReady) {
                     v.setEnabled(false);
                     currentWord = makeWord();
@@ -179,8 +187,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
-
-
     }
 
     public void stopThat() {

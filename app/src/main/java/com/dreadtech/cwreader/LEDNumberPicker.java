@@ -78,6 +78,7 @@ public class LEDNumberPicker extends LinearLayout {
         TextView labelView = new TextView(context);
         labelView.setText(label);
         labelView.setGravity(Gravity.CENTER_HORIZONTAL);
+        labelView.setTextAppearance(context, R.style.labelText);
         this.addView(labelView);
 
 

@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/imageView"
+        android:id="@+id/backgroundView"
         android:background="@drawable/wood"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -24,12 +24,20 @@
         android:id="@+id/mlayout">
 
         <EditText
+            android:id="@+id/readsource"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:paddingTop="30dp"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#dddd88"
+            android:gravity="center"
+            android:padding="2dp"
             android:text="@string/DefaultText"
-            android:id="@+id/readsource"
-            android:gravity="center" />
+            android:textColor="#333333"
+            android:theme="@style/editText"
+            android:typeface="monospace" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -62,6 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/labelText"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/Settings"
             android:id="@+id/settings"
@@ -108,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Farnsworth"
+                style="@style/labelText"
                 android:layout_gravity="center"
                 />
             <!--
@@ -144,7 +154,9 @@
             dreadtech:maxValue="99"
             dreadtech:minValue="5"
             android:id="@+id/wpm"
-            dreadtech:label="@string/WPM"/>
+            dreadtech:label="@string/WPM"
+            style="@style/labelText"
+            />
 
         <com.dreadtech.cwreader.LEDNumberPicker
             android:layout_width="wrap_content"
@@ -153,7 +165,9 @@
             android:padding="20dp"
             dreadtech:maxValue="2000"
             dreadtech:minValue="200"
-            dreadtech:label="@string/ToneFreq"/>
+            dreadtech:label="@string/ToneFreq"
+            style="@style/labelText"
+            />
 
 
     </LinearLayout>
