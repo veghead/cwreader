@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class LEDNumberPicker extends LinearLayout {
 
     public interface OnValueChangeListener {
-        public abstract void onValueChange(LEDNumberPicker picker, int oldValue, int newValue);
+        void onValueChange(LEDNumberPicker picker, int oldValue, int newValue);
     }
 
     private int maxValue = 99;

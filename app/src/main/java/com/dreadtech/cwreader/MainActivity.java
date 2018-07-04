@@ -32,6 +32,10 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.Locale;
 import java.util.Random;
 
@@ -59,7 +63,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        MobileAds.initialize(this, "ca-app-pub-6877516850913018~2865964003");
+        loadAd();
         tony = new Tony();
         farnsworthSwitch = (ToggleSwitch)findViewById(R.id.farnsworthSwitch);
         wpmPicker = (LEDNumberPicker)findViewById(R.id.wpm);
@@ -171,7 +176,7 @@ public class MainActivity extends Activity {
         groupsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                AdView mAdView = (AdView)findViewById(R.id.adView);
                 if (ttsReady) {
                     v.setEnabled(false);
                     currentWord = makeWord();
@@ -300,6 +305,12 @@ public class MainActivity extends Activity {
                 return "zed";
         }
         return String.valueOf(c);
+    }
+
+    void loadAd() {
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 }
 
