@@ -26,6 +26,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -58,12 +59,15 @@ public class MainActivity extends Activity {
     Button groupsButton;
     String currentWord = "";
     Tony tony;
+    AdView madView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MobileAds.initialize(this, "ca-app-pub-6877516850913018~2865964003");
+        madView = (AdView) findViewById(R.id.adView);
+
         loadAd();
         tony = new Tony();
         farnsworthSwitch = (ToggleSwitch)findViewById(R.id.farnsworthSwitch);
@@ -72,10 +76,11 @@ public class MainActivity extends Activity {
         lettersPerGroupPicker = (LEDNumberPicker)findViewById(R.id.lettersPerGroup);
         numberOfGroupsPicker = (LEDNumberPicker)findViewById(R.id.numberOfGroups);
         readSource = (EditText)findViewById(R.id.readsource);
+
         findViewById(R.id.backgroundView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                endEdit();
             }
         });
         numberOfGroupsPicker.setValue(1);
@@ -122,6 +127,7 @@ public class MainActivity extends Activity {
                         public void run() {
                             stopThat();
                             readSource.setText(currentWord);
+                            loadAd();
                         }
                     });
                 }
@@ -148,7 +154,7 @@ public class MainActivity extends Activity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                endEdit();
                 if (ttsReady) {
                     v.setEnabled(false);
                     groupsButton.setEnabled(false);
@@ -168,7 +174,7 @@ public class MainActivity extends Activity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
+                endEdit();
                 stopThat();
             }
         });
@@ -176,7 +182,7 @@ public class MainActivity extends Activity {
         groupsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdView mAdView = (AdView)findViewById(R.id.adView);
+                endEdit();
                 if (ttsReady) {
                     v.setEnabled(false);
                     currentWord = makeWord();
@@ -200,6 +206,10 @@ public class MainActivity extends Activity {
         tony.setStopped();
         stopButton.setEnabled(false);
         stopped = true;
+    }
+
+    private void endEdit() {
+        readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
     }
 
     @Override
@@ -242,7 +252,7 @@ public class MainActivity extends Activity {
 
         for(int i = 0; i < word.length() ; i++) {
             char c = word.charAt(i);
-            sb.append(phonetic(c) + " ");
+            sb.append(phonetic(c) + ". ");
         }
 
         Log.d(TAG, "Before: " + word + "  After:" + sb.toString());
@@ -296,11 +306,11 @@ public class MainActivity extends Activity {
             case 'V':
                 return "vee";
             case 'W':
-                return "double-u";
+                return "double you";
             case 'X':
                 return "ex";
             case 'Y':
-                return "wy";
+                return "why";
             case 'Z':
                 return "zed";
         }
@@ -308,9 +318,8 @@ public class MainActivity extends Activity {
     }
 
     void loadAd() {
-        AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        madView.loadAd(adRequest);
     }
 }
 
