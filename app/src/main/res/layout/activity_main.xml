@@ -23,50 +23,67 @@
         android:orientation="vertical"
         android:id="@+id/mlayout">
 
-        <EditText
-            android:id="@+id/readsource"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#dddd88"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="@string/DefaultText"
-            android:textColor="#333333"
-            android:theme="@style/editText"
-            android:typeface="monospace" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/cwreaderbrass" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/readsource"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#dddd88"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@string/DefaultText"
+                    android:textColor="#333333"
+                    android:theme="@style/editText"
+                    android:typeface="monospace" />
+
+
+
+                <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/CopyGroups"
-            android:layout_gravity="center"
-            android:id="@+id/groups_button"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Stop"
-            android:layout_gravity="center"
-            android:id="@+id/stop_button"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/PlayText"
-            android:layout_gravity="center"
-            android:id="@+id/play_button"
-            />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/groups_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/CopyGroups" />
+
+            <Button
+                android:id="@+id/stop_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/Stop" />
+
+            <Button
+                android:id="@+id/play_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/PlayText" />
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,7 +156,6 @@
                             />
                             -->
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -189,6 +205,8 @@
         </com.google.android.gms.ads.AdView>
 
     </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 
