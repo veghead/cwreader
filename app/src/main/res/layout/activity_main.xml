@@ -1,6 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    xmlns:dreadtech="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:padding="0dp"
     tools:context=".MainActivity">
@@ -32,180 +31,19 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-                <EditText
-                    android:id="@+id/readsource"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#dddd88"
-                    android:gravity="center"
-                    android:padding="2dp"
-                    android:text="@string/DefaultText"
-                    android:textColor="#333333"
-                    android:theme="@style/editText"
-                    android:typeface="monospace" />
-
-
-
-                <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/groups_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/CopyGroups" />
-
-            <Button
-                android:id="@+id/stop_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/Stop" />
-
-            <Button
-                android:id="@+id/play_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/PlayText" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/labelText"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/Settings"
-            android:id="@+id/settings"
-            android:layout_gravity="center_horizontal" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
-
-            <com.dreadtech.cwreader.LEDNumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                dreadtech:maxValue="10"
-                dreadtech:minValue="1"
-                android:id="@+id/numberOfGroups"
-                dreadtech:label="@string/NumberOfGroups"/>
-
-            <com.dreadtech.cwreader.LEDNumberPicker
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="20dp"
-                dreadtech:maxValue="10"
-                dreadtech:minValue="1"
-                android:id="@+id/lettersPerGroup"
-                dreadtech:label="@string/LettersPerGroup"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/toggleholder">
-
-            <com.dreadtech.cwreader.ToggleSwitch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/toggle_switch_bg"
-                android:id="@+id/farnsworthSwitch"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Farnsworth"
-                style="@style/labelText"
-                android:layout_gravity="center"
-                />
-            <!--
-                        <Space
-                            android:layout_width="40dp"
-                            android:layout_height="match_parent" />
-
-                        <com.dreadtech.cwreader.ToggleSwitch
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/toggle_switch_bg"
-                            android:id="@+id/digitsSwitch"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Digits"
-                            android:layout_gravity="center"
-                            />
-                            -->
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-
-        <com.dreadtech.cwreader.LEDNumberPicker
-            android:layout_width="wrap_content"
+        <fragment
+            android:id="@+id/main_fragment"
+            android:name="com.dreadtech.cwreader.MainUI"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
-            dreadtech:maxValue="99"
-            dreadtech:minValue="5"
-            android:id="@+id/wpm"
-            dreadtech:label="@string/WPM"
-            style="@style/labelText"
             />
 
-        <com.dreadtech.cwreader.LEDNumberPicker
-            android:layout_width="wrap_content"
+        <!--<fragment
+            android:id="@+id/settings_fragment"
+            android:name="com.dreadtech.cwreader.SettingsUI"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/freq"
-            android:padding="20dp"
-            dreadtech:maxValue="2000"
-            dreadtech:minValue="200"
-            dreadtech:label="@string/ToneFreq"
-            style="@style/labelText"
-            />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
-        </com.google.android.gms.ads.AdView>
-
-    </LinearLayout>
-            </LinearLayout>
+            />-->
         </ScrollView>
 
     </LinearLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dreadtech="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_ui_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/labelText"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/Settings"
+        android:id="@+id/settings"
+        android:layout_gravity="center_horizontal" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+
+        <com.dreadtech.cwreader.LEDNumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            dreadtech:maxValue="10"
+            dreadtech:minValue="1"
+            android:id="@+id/numberOfGroups"
+            dreadtech:label="@string/NumberOfGroups"/>
+
+        <com.dreadtech.cwreader.LEDNumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            dreadtech:maxValue="10"
+            dreadtech:minValue="1"
+            android:id="@+id/lettersPerGroup"
+            dreadtech:label="@string/LettersPerGroup"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/toggleholder">
+
+        <com.dreadtech.cwreader.ToggleSwitch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/toggle_switch_bg"
+            android:id="@+id/farnsworthSwitch"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Farnsworth"
+            style="@style/labelText"
+            android:layout_gravity="center"
+            />
+        <!--
+                    <Space
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent" />
+
+                    <com.dreadtech.cwreader.ToggleSwitch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/toggle_switch_bg"
+                        android:id="@+id/digitsSwitch"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/Digits"
+                        android:layout_gravity="center"
+                        />
+                        -->
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+
+        <com.dreadtech.cwreader.LEDNumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            dreadtech:maxValue="99"
+            dreadtech:minValue="5"
+            android:id="@+id/wpm"
+            dreadtech:label="@string/WPM"
+            style="@style/labelText"
+            />
+
+        <com.dreadtech.cwreader.LEDNumberPicker
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/freq"
+            android:padding="20dp"
+            dreadtech:maxValue="2000"
+            dreadtech:minValue="200"
+            dreadtech:label="@string/ToneFreq"
+            style="@style/labelText"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
+
+    </LinearLayout>
+</LinearLayout>
