@@ -1,9 +1,9 @@
 package com.dreadtech.cwreader;
 
-import android.app.Fragment;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +28,11 @@ public class SettingsUI extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.settings, container, false);
-        farnsworthSwitch = getActivity().findViewById(R.id.farnsworthSwitch);
-        wpmPicker = getActivity().findViewById(R.id.wpm);
-        freqPicker = getActivity().findViewById(R.id.freq);
-        lettersPerGroupPicker = getActivity().findViewById(R.id.lettersPerGroup);
-        numberOfGroupsPicker = getActivity().findViewById(R.id.numberOfGroups);
+        farnsworthSwitch = v.findViewById(R.id.farnsworthSwitch);
+        wpmPicker = v.findViewById(R.id.wpm);
+        freqPicker = v.findViewById(R.id.freq);
+        lettersPerGroupPicker = v.findViewById(R.id.lettersPerGroup);
+        numberOfGroupsPicker = v.findViewById(R.id.numberOfGroups);
         numberOfGroupsPicker.setValue(1);
         lettersPerGroupPicker.setValue(5);
 

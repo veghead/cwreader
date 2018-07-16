@@ -1,12 +1,12 @@
 package com.dreadtech.cwreader;
 
-import android.app.Fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class MainUI extends Fragment {
-    private static final String TAG = "CWReader";
+    private static final String TAG = "CWRMUI";
     private EditText readSource;
     private CWReaderViewModel viewModel;
     private Tony tony;
@@ -50,7 +50,10 @@ public class MainUI extends Fragment {
         viewModel = ViewModelProviders.of((FragmentActivity)getActivity()).get(CWReaderViewModel.class);
         final Observer<Map<String,String>> updateObserver = new Observer<Map<String, String>>() {
             @Override
-            public void onChanged(@Nullable final Map<String, String> newName) {
+            public void onChanged(@Nullable final Map<String, String> settings) {
+                for (Map.Entry<String, String> entry : settings.entrySet()) {
+                    Log.e(TAG, "Key: " + entry.getKey() + ", Value: " + entry.getValue());
+                }
                 // Update the UI, in this case, a TextView.
             }
         };
@@ -65,7 +68,6 @@ public class MainUI extends Fragment {
                 endEdit();
             }
         });*/
-
 
         tony.setFinishedSound(new Runnable() {
             @Override
@@ -134,6 +136,9 @@ public class MainUI extends Fragment {
             @Override
             public void onClick(View v) {
                 endEdit();
+                viewModel.setValueNamed("change", "true");
+                //getActivity().toggle();
+                /*
                 if (ttsReady) {
                     v.setEnabled(false);
                     currentWord = makeWord();
@@ -146,7 +151,8 @@ public class MainUI extends Fragment {
                     msg.setData(bundle);
                     stopped = false;
                     tony.getHandler().sendMessage(msg);
-                }
+                }*/
+
             }
         });
         return v;
