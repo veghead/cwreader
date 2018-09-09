@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2015 dreadtech.com.
+  ~ Copyright (c) 2018 dreadtech.com.
   ~
   ~     This file is part of CWReader.
   ~
@@ -17,15 +17,8 @@
   ~     You should have received a copy of the GNU General Public License
   ~     along with CWReader.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<resources>
-    <declare-styleable name="LEDNumberPicker">
-        <attr name="maxValue" format="integer" />
-        <attr name="minValue" format="integer" />
-        <attr name="label" format="string" />
-    </declare-styleable>
-    <declare-styleable name="PushButton">
-        <attr name="buttonLabel" format="string" />
-        <attr name="buttonType" format="string" />
-    </declare-styleable>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/redbutton1"
+        android:state_pressed="true" />
+    <item android:drawable="@drawable/redbutton0" />
+</selector>

@@ -1,26 +1,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:dreadtech="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="0dp"
-    tools:context=".MainActivity">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    tools:context=".MainActivity"
+    android:id="@+id/backgroundView"
+    >
 
-    <ImageView
+   <!-- <ImageView
+        android:id="@+id/backgroundView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/backgroundView"
-        android:background="@drawable/wood"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:contentDescription="@string/wallpaper"
+        android:layout_centerVertical="true"
+        android:background="@drawable/wood"
         android:clickable="false"
-        />
+        android:contentDescription="@string/wallpaper" />-->
 
 
     <LinearLayout
+        android:id="@+id/mlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/mlayout">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView"
@@ -31,25 +35,203 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:id="@+id/fragment_holder">
-                <fragment
-                    android:id="@+id/main_fragment"
-                    android:name="com.dreadtech.cwreader.MainUI"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-                <fragment
-                    android:id="@+id/settings_ui_id"
-                    android:name="com.dreadtech.cwreader.SettingsUI"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/main_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/readsource"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#040404"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:text="@string/DefaultText"
+                        android:textColor="#aa3333"
+                        android:theme="@style/editText"
+                        android:typeface="monospace" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.dreadtech.cwreader.PushButton
+                            android:id="@+id/groups_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            dreadtech:buttonLabel="@string/CopyGroups" />
+
+                        <com.dreadtech.cwreader.PushButton
+                            android:id="@+id/stop_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            dreadtech:buttonLabel="@string/Stop" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <com.dreadtech.cwreader.PushButton
+                            android:id="@+id/play_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            dreadtech:buttonLabel="@string/PlayText" />
+
+                        <com.dreadtech.cwreader.PushButton
+                            android:id="@+id/settings_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            dreadtech:buttonLabel="@string/Settings"
+                            dreadtech:buttonType="blue"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/settings_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/settings"
+                        style="@style/labelText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/Settings"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <com.dreadtech.cwreader.LEDNumberPicker
+                            android:id="@+id/numberOfGroups"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            dreadtech:label="@string/NumberOfGroups"
+                            dreadtech:maxValue="10"
+                            dreadtech:minValue="1" />
+
+                        <com.dreadtech.cwreader.LEDNumberPicker
+                            android:id="@+id/lettersPerGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            dreadtech:label="@string/LettersPerGroup"
+                            dreadtech:maxValue="10"
+                            dreadtech:minValue="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toggleholder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <com.dreadtech.cwreader.ToggleSwitch
+                            android:id="@+id/farnsworthSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/toggle_switch_bg" />
+
+                        <TextView
+                            style="@style/labelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/Farnsworth" />
+                        <!--
+                                    <Space
+                                        android:layout_width="40dp"
+                                        android:layout_height="match_parent" />
+
+                                    <com.dreadtech.cwreader.ToggleSwitch
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/toggle_switch_bg"
+                                        android:id="@+id/digitsSwitch"
+                                        />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/Digits"
+                                        android:layout_gravity="center"
+                                        />
+                                        -->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+
+                        <com.dreadtech.cwreader.LEDNumberPicker
+                            android:id="@+id/wpm"
+                            style="@style/labelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            dreadtech:label="@string/WPM"
+                            dreadtech:maxValue="99"
+                            dreadtech:minValue="5" />
+
+                        <com.dreadtech.cwreader.LEDNumberPicker
+                            android:id="@+id/freq"
+                            style="@style/labelText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            dreadtech:label="@string/ToneFreq"
+                            dreadtech:maxValue="2000"
+                            dreadtech:minValue="200" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/adView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            ads:adSize="BANNER"
+                            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"></com.google.android.gms.ads.AdView>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </ScrollView>
 
     </LinearLayout>

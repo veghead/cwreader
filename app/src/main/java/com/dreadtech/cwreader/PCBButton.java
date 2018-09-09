@@ -21,11 +21,11 @@ package com.dreadtech.cwreader;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.widget.Button;
+import android.support.v7.widget.AppCompatButton;
 
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 
-public class PCBButton extends Button {
+public class PCBButton extends AppCompatButton {
     private int width = 30;
 
     public PCBButton(Context context) {
