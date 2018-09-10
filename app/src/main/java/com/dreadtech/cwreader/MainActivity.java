@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
     TextToSpeech ttobj;
     boolean ttsReady = false;
     boolean stopped = true;
+    boolean settingsDisplayed = false;
     EditText readSource;
     LEDNumberPicker wpmPicker;
     LEDNumberPicker freqPicker;
@@ -206,12 +207,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
-                /*runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
                     public void run() {
                         settingsView.setVisibility(View.VISIBLE);
                         mainView.setVisibility(View.GONE);
+                        settingsDisplayed = true;
                     }
-                });*/
+                });
             }
         });
         settingsView.setVisibility(View.GONE);
@@ -265,7 +267,7 @@ public class MainActivity extends Activity {
 
         for(int i = 0; i < word.length() ; i++) {
             char c = word.charAt(i);
-            sb.append(phonetic(c) + " ");
+            sb.append(phonetic(c) + ", ");
         }
 
         Log.d(TAG, "Before: " + word + "  After:" + sb.toString());
@@ -334,6 +336,16 @@ public class MainActivity extends Activity {
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+    }
+
+    public void onBackPressed () {
+        if (settingsDisplayed) {
+            settingsView.setVisibility(View.GONE);
+            mainView.setVisibility(View.VISIBLE);
+            settingsDisplayed = false;
+            return;
+        }
+        super.onBackPressed();
     }
 }
 
