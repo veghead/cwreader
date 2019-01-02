@@ -69,8 +69,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setBackgroundDrawableResource(R.drawable.wood);
-        //MobileAds.initialize(this, "ca-app-pub-6877516850913018~2865964003");
-        //loadAd();
         tony = new Tony();
         farnsworthSwitch = findViewById(R.id.farnsworthSwitch);
         wpmPicker = findViewById(R.id.wpm);
@@ -187,9 +185,7 @@ public class MainActivity extends Activity {
         groupsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdView mAdView = findViewById(R.id.adView);
                 if (ttsReady) {
-                    v.setEnabled(false);
                     currentWord = makeWord();
                     playButton.setEnabled(false);
                     stopButton.setEnabled(true);
@@ -321,7 +317,7 @@ public class MainActivity extends Activity {
             case 'V':
                 return "vee";
             case 'W':
-                return "double-u";
+                return "double you";
             case 'X':
                 return "ex";
             case 'Y':
@@ -332,11 +328,6 @@ public class MainActivity extends Activity {
         return String.valueOf(c);
     }
 
-    void loadAd() {
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-    }
 
     public void onBackPressed () {
         if (settingsDisplayed) {

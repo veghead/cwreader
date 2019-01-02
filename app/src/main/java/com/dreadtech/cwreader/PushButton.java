@@ -3,6 +3,7 @@ package com.dreadtech.cwreader;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
@@ -44,22 +45,24 @@ public class PushButton extends LinearLayout {
             }
         });
 
-        int drawable = Objects.equals(a.getString(R.styleable.PushButton_buttonType),"blue")
-                ? R.drawable.bluepushbutton
-                : R.drawable.pushbutton;
+        int drawable = R.drawable.pushbutton;
+
         button.setBackground(getResources().getDrawable(drawable));
         button.setLayoutParams(new LinearLayout.LayoutParams(bsize, bsize));
 
         caption = new TextView(context);
-        //caption.setBackgroundColor(Color.WHITE);
-        caption.setTextColor(Color.GRAY);
+        caption.setTypeface(Typeface.MONOSPACE);
+        caption.setBackgroundColor(Color.argb(0xff,0xfe,0xc4,0x73));
+        caption.setTextColor(Color.argb(0xd0,0x50,0x40,0x30 ));
 
         caption.setText(a.getString(R.styleable.PushButton_buttonLabel));
         LayoutParams params = new LinearLayout.LayoutParams(bsize * 2, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.setMargins(10,0,10,0);
+        params.setMargins(20,0,20,0);
+        caption.setPadding(10,0,10,0);
         caption.setLayoutParams(params);
         addView(button);
         addView(caption);
+        this.setPadding(0,20,0,20);
     }
 
     @Override

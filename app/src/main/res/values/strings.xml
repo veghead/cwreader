@@ -7,12 +7,12 @@
     <string name="WPM">WPM</string>
     <string name="ToneFreq">Tone Freq</string>
     <string name="Play">Play</string>
-    <string name="Stop">Stop</string>
-    <string name="PlayText">Play Text</string>
-    <string name="CopyGroups">Play Random</string>
+    <string name="Stop">STOP</string>
+    <string name="PlayText">PLAY AGAIN</string>
+    <string name="CopyGroups">RANDOM</string>
     <string name="Farnsworth">Farnsworth</string>
     <string name="Digits">Digits</string>
-    <string name="Settings">Settings</string>
+    <string name="Settings">SETTINGS</string>
     <string name="NumberOfGroups">Number of groups</string>
     <string name="LettersPerGroup">Letters per group</string>
     <string name="DefaultText">one two, one two, and through and through</string>
