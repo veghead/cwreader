@@ -6,3 +6,4 @@ Also contains code for a NumberPicker styled to look like a 7-segment
 LED display.
 
 ![screenshot](https://raw.githubusercontent.com/veghead/cwreader/master/res/cw-reader-screenshot.jpg "Screenshot")
+![screenshot-settings](https://raw.githubusercontent.com/veghead/cwreader/master/res/cw-reader-screenshot-settings.jpg "Screenshot")
