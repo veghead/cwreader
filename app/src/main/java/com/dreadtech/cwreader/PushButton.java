@@ -54,7 +54,7 @@ public class PushButton extends LinearLayout {
         caption.setTypeface(Typeface.MONOSPACE);
         caption.setBackgroundColor(Color.argb(0xff,0x10,0x40,0x80));
         caption.setTextColor(Color.argb(0xa0,0xdd,0xdd,0xdd ));
-
+        caption.setGravity(Gravity.CENTER);
         caption.setText(a.getString(R.styleable.PushButton_buttonLabel));
         LayoutParams params = new LinearLayout.LayoutParams(bsize * 2, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(20,0,20,0);

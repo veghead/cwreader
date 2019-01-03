@@ -159,7 +159,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 readSource.onEditorAction(EditorInfo.IME_ACTION_DONE);
                 if (ttsReady) {
-                    v.setEnabled(false);
                     groupsButton.setEnabled(false);
                     stopButton.setEnabled(true);
                     Message msg = Message.obtain();
